@@ -39,6 +39,7 @@ extension AppSpacing on EdgeInsets {
   static const double iconContainerSize = AppConstants.iconContainerSize;
   static const double iconSize = AppConstants.largeIconSize;
   static const double containerBorderWidth = AppConstants.borderWidth;
+  static const double mediumSpacing = AppConstants.defaultPadding;
   
   /// Form field spacing
   static const EdgeInsets formFieldSpacing = EdgeInsets.only(

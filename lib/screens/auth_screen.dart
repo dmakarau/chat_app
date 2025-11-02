@@ -10,7 +10,22 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _formKey = GlobalKey<FormState>();
   bool _isLoginScreen = true;
+  String _enteredEmail = '';
+  String _enteredPassword = '';
+
+  void _handleSubmit() {
+    // Force validation of all fields, including password
+    final isValid = _formKey.currentState!.validate();
+    
+    if (isValid) {
+      _formKey.currentState!.save();
+      print('Email: $_enteredEmail, Password: $_enteredPassword');
+    }
+    // If validation fails, error messages will automatically show under fields
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,11 +41,11 @@ class _AuthScreenState extends State<AuthScreen> {
                 height: AppSpacing.iconContainerSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   border: Border.all(
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withOpacity(0.3),
+                    ).colorScheme.primary.withValues(alpha: 0.3),
                     width: AppSpacing.containerBorderWidth,
                   ),
                 ),
@@ -46,6 +61,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: Padding(
                     padding: AppSpacing.cardPadding,
                     child: Form(
+                      key: _formKey,
+                      autovalidateMode: AutovalidateMode.onUnfocus,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -57,6 +74,9 @@ class _AuthScreenState extends State<AuthScreen> {
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
                             validator: Validators.validateEmail,
+                            onSaved: (value ) {
+                              _enteredEmail = value!;
+                            },
                           ),
                           TextFormField(
                             decoration: InputDecoration(labelText: 'Password'),
@@ -68,15 +88,18 @@ class _AuthScreenState extends State<AuthScreen> {
                               value, 
                               isSignUp: !_isLoginScreen,
                             ),
+                             onSaved: (value ) {
+                              _enteredPassword = value!;
+                            },
                           ),
-                          SizedBox(height: AppSpacing.medium.vertical),
+                          SizedBox(height: AppSpacing.mediumSpacing),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(
                                 context,
                               ).colorScheme.primaryContainer,
                             ),
-                            onPressed: () {},
+                            onPressed: _handleSubmit,
                             child: Text(_isLoginScreen ? 'Login' : 'Sign Up'),
                           ),
                           TextButton(
