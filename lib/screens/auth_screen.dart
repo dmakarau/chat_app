@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../utils/validators.dart';
+import '../utils/app_spacing.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -19,14 +21,9 @@ class _AuthScreenState extends State<AuthScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(
-                  top: 30,
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                ),
-                width: 200,
-                height: 200,
+                margin: AppSpacing.iconContainerMargin,
+                width: AppSpacing.iconContainerSize,
+                height: AppSpacing.iconContainerSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
@@ -34,20 +31,20 @@ class _AuthScreenState extends State<AuthScreen> {
                     color: Theme.of(
                       context,
                     ).colorScheme.primary.withOpacity(0.3),
-                    width: 2,
+                    width: AppSpacing.containerBorderWidth,
                   ),
                 ),
                 child: Icon(
                   Icons.forum,
-                  size: 120,
+                  size: AppSpacing.iconSize,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               Card(
-                margin: const EdgeInsets.all(20),
+                margin: AppSpacing.cardMargin,
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: AppSpacing.cardPadding,
                     child: Form(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -59,6 +56,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
+                            validator: Validators.validateEmail,
                           ),
                           TextFormField(
                             decoration: InputDecoration(labelText: 'Password'),
@@ -66,8 +64,12 @@ class _AuthScreenState extends State<AuthScreen> {
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
                             obscureText: true,
+                            validator: (value) => Validators.validatePassword(
+                              value, 
+                              isSignUp: !_isLoginScreen,
+                            ),
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: AppSpacing.medium.vertical),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(
