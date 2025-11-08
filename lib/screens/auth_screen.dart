@@ -25,22 +25,28 @@ class _AuthScreenState extends State<AuthScreen> {
     if (!isValid) {
       return;
     }
+    
     _formKey.currentState!.save();
-    if (_isLoginScreen) {
-    } else {
-      try {
-        final UserCredential = await _firebase.createUserWithEmailAndPassword(
+    
+    try {
+      if (_isLoginScreen) {
+        final userCredentials = await _firebase.signInWithEmailAndPassword(
+          email: _enteredEmail, 
+          password: _enteredPassword,
+        );
+        print('DEBUG: User logged in: ${userCredentials}');
+      } else {
+        final userCredentials = await _firebase.createUserWithEmailAndPassword(
           email: _enteredEmail,
           password: _enteredPassword,
         );
-        print('DEBUG: User created: ${UserCredential}');
-      } on FirebaseAuthException catch (error) {
-        if (error.code == 'email-already-in-use') {}
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error.message ?? 'Unknown error occurred.')),
-        );
+        print('DEBUG: User created: ${userCredentials}');
       }
+    } on FirebaseAuthException catch (error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message ?? 'Unknown error occurred.')),
+      );
     }
   }
 
