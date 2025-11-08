@@ -34,13 +34,11 @@ class _AuthScreenState extends State<AuthScreen> {
           email: _enteredEmail, 
           password: _enteredPassword,
         );
-        print('DEBUG: User logged in: ${userCredentials}');
       } else {
         final userCredentials = await _firebase.createUserWithEmailAndPassword(
           email: _enteredEmail,
           password: _enteredPassword,
         );
-        print('DEBUG: User created: ${userCredentials}');
       }
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
