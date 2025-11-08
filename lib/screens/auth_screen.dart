@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../utils/validators.dart';
 import '../utils/app_spacing.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -15,15 +18,30 @@ class _AuthScreenState extends State<AuthScreen> {
   String _enteredEmail = '';
   String _enteredPassword = '';
 
-  void _handleSubmit() {
+  void _handleSubmit() async {
     // Force validation of all fields, including password
     final isValid = _formKey.currentState!.validate();
-    
-    if (isValid) {
-      _formKey.currentState!.save();
-      print('Email: $_enteredEmail, Password: $_enteredPassword');
+
+    if (!isValid) {
+      return;
     }
-    // If validation fails, error messages will automatically show under fields
+    _formKey.currentState!.save();
+    if (_isLoginScreen) {
+    } else {
+      try {
+        final UserCredential = await _firebase.createUserWithEmailAndPassword(
+          email: _enteredEmail,
+          password: _enteredPassword,
+        );
+        print('DEBUG: User created: ${UserCredential}');
+      } on FirebaseAuthException catch (error) {
+        if (error.code == 'email-already-in-use') {}
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'Unknown error occurred.')),
+        );
+      }
+    }
   }
 
   @override
@@ -41,7 +59,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 height: AppSpacing.iconContainerSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.primary.withValues(alpha: 0.1),
                   border: Border.all(
                     color: Theme.of(
                       context,
@@ -74,7 +94,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
                             validator: Validators.validateEmail,
-                            onSaved: (value ) {
+                            onSaved: (value) {
                               _enteredEmail = value!;
                             },
                           ),
@@ -85,10 +105,10 @@ class _AuthScreenState extends State<AuthScreen> {
                             textCapitalization: TextCapitalization.none,
                             obscureText: true,
                             validator: (value) => Validators.validatePassword(
-                              value, 
+                              value,
                               isSignUp: !_isLoginScreen,
                             ),
-                             onSaved: (value ) {
+                            onSaved: (value) {
                               _enteredPassword = value!;
                             },
                           ),
