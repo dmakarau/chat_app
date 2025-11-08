@@ -13,9 +13,10 @@ A Flutter chat application with Firebase authentication and real-time capabiliti
 ## Current Features
 
 - **Firebase Integration**: Complete Firebase setup with secure configuration management
-- **User Authentication**: Full login and signup functionality with Firebase Auth
+- **User Authentication**: Full login, signup, and logout functionality with Firebase Auth
 - **Authentication Flow Management**: Automatic navigation based on user authentication state
 - **Screen Management**: Multi-screen architecture with splash, authentication, and chat screens
+- **Session Management**: Secure user logout with automatic return to authentication screen
 - **Form Validation**: Progressive validation with context-aware rules (different for login vs signup)
 - **Professional UI**: Material Design 3 with custom color scheme and responsive layouts
 - **Clean Architecture**: Organized code structure with separation of concerns
@@ -26,12 +27,13 @@ A Flutter chat application with Firebase authentication and real-time capabiliti
 
 ### Completed
 - Firebase project setup and initialization
-- Complete user authentication system (both login and registration)
+- Complete user authentication system (login, registration, and logout)
 - Authentication flow management with automatic screen navigation
 - Multi-screen architecture with proper state management
 - Authentication screen with login/signup mode toggle
 - Splash screen for loading states
-- Chat screen foundation (UI structure in place)
+- Chat screen foundation with logout functionality
+- User session management with secure logout
 - Form validation with progressive error display
 - Professional UI components and spacing system
 - Secure configuration file management
@@ -66,11 +68,12 @@ lib/
 ### Authentication System
 - **Progressive Validation**: Fields validate on unfocus for better user experience
 - **Context-Aware Rules**: Different validation requirements for login vs signup modes
-- **Firebase Integration**: Complete user authentication with both login and registration
+- **Firebase Integration**: Complete user authentication with login, registration, and logout
 - **Form State Management**: Clean form validation with GlobalKey and state control
 - **Error Handling**: Comprehensive Firebase exception handling with user-friendly messages
 - **Authentication Flow**: Automatic navigation between screens based on user state
 - **Session Management**: Persistent authentication state using Firebase Auth stream
+- **Secure Logout**: One-click logout functionality with automatic return to authentication screen
 
 ### UI/UX Design
 - **Material Design 3**: Modern Flutter theming with custom color schemes
@@ -225,6 +228,13 @@ This project requires iOS 15.0 or later due to Firebase dependencies. The follow
 - Professional form validation with inline errors
 - Complete Firebase authentication integration for both user flows
 
+### Chat Screen
+- Clean app bar with application title
+- Logout button with exit icon for easy access
+- One-click logout functionality with immediate session termination
+- Automatic navigation back to authentication upon logout
+- Foundation layout ready for chat messages
+
 ### Form Controls
 - Material Design text fields with proper keyboard types
 - Secure password input with obscured text
@@ -259,6 +269,8 @@ This project requires iOS 15.0 or later due to Firebase dependencies. The follow
 - Professional error handling with descriptive Firebase exception messages
 - Secure session management through Firebase Auth
 - Automatic navigation to chat screen upon successful authentication
+- One-click logout functionality accessible from the chat screen
+- Automatic return to authentication screen after logout
 - Splash screen during app initialization and authentication state checking
 
 ### Application Architecture
