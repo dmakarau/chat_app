@@ -131,7 +131,7 @@ The interface follows Material Design 3 guidelines with thoughtful user interact
 
 2. **Firebase Configuration**
    
-   This application requires Firebase services that must be configured individually for security reasons.
+   This application requires Firebase services that must be configured individually for security reasons. **Firebase configuration files containing API keys are intentionally excluded from the repository.**
 
    **Create Firebase Project**
    - Visit [Firebase Console](https://console.firebase.google.com/)
