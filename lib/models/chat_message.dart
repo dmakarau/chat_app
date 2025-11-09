@@ -19,7 +19,7 @@ class ChatMessage {
 
   factory ChatMessage.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
-    
+
     return ChatMessage(
       id: doc.id,
       text: data['text'] ?? '',
@@ -36,7 +36,9 @@ class ChatMessage {
       'userId': userId,
       'username': username,
       'userImage': userImage,
-      'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
+      'createdAt': createdAt != null
+          ? Timestamp.fromDate(createdAt!)
+          : FieldValue.serverTimestamp(),
     };
   }
 }

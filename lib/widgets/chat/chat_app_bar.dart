@@ -8,15 +8,15 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return AppBar(
       elevation: 0,
       backgroundColor: theme.colorScheme.surface,
       foregroundColor: theme.colorScheme.onSurface,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: theme.colorScheme.surface,
-        statusBarIconBrightness: theme.brightness == Brightness.dark 
-            ? Brightness.light 
+        statusBarIconBrightness: theme.brightness == Brightness.dark
+            ? Brightness.light
             : Brightness.dark,
       ),
       title: const _ChatAppBarTitle(),
@@ -25,10 +25,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             AuthService.signOut();
           },
-          icon: Icon(
-            Icons.logout,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+          icon: Icon(Icons.logout, color: theme.colorScheme.onSurfaceVariant),
           tooltip: 'Sign Out',
         ),
       ],
@@ -45,7 +42,7 @@ class _ChatAppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return Row(
       children: [
         CircleAvatar(

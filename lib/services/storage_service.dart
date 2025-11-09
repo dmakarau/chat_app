@@ -28,9 +28,7 @@ class StorageService {
   }
 
   /// Delete user profile image
-  static Future<void> deleteUserImage({
-    required String userId,
-  }) async {
+  static Future<void> deleteUserImage({required String userId}) async {
     try {
       final storageRef = _storage
           .ref()

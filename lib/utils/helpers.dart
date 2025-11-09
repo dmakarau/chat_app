@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 /// General helper functions for the app
 class AppHelpers {
   /// Shows a snackbar with the given message
-  static void showSnackBar(BuildContext context, String message, {
+  static void showSnackBar(
+    BuildContext context,
+    String message, {
     bool isError = false,
     Duration duration = const Duration(seconds: 3),
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: isError 
-          ? Theme.of(context).colorScheme.error
-          : Theme.of(context).colorScheme.primary,
+        backgroundColor: isError
+            ? Theme.of(context).colorScheme.error
+            : Theme.of(context).colorScheme.primary,
         duration: duration,
         behavior: SnackBarBehavior.floating,
       ),
@@ -111,7 +113,8 @@ extension StringExtensions on String {
 
   /// Checks if string is a valid email
   bool get isValidEmail {
-    return RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-        .hasMatch(this);
+    return RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    ).hasMatch(this);
   }
 }

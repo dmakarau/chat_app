@@ -14,10 +14,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final AppContainerTheme containers;
 
   @override
-  AppTheme copyWith({
-    AppSpacingTheme? spacing,
-    AppContainerTheme? containers,
-  }) {
+  AppTheme copyWith({AppSpacingTheme? spacing, AppContainerTheme? containers}) {
     return AppTheme(
       spacing: spacing ?? this.spacing,
       containers: containers ?? this.containers,
@@ -58,11 +55,11 @@ class AppSpacingTheme {
 
   // Predefined EdgeInsets
   EdgeInsets get iconContainerMargin => EdgeInsets.only(
-        top: extraLarge,
-        bottom: mediumValue,
-        left: mediumValue,
-        right: mediumValue,
-      );
+    top: extraLarge,
+    bottom: mediumValue,
+    left: mediumValue,
+    right: mediumValue,
+  );
 
   EdgeInsets get cardMargin => EdgeInsets.all(mediumValue);
   EdgeInsets get cardPadding => EdgeInsets.all(medium);
@@ -96,7 +93,8 @@ class AppContainerTheme {
     return AppContainerTheme(
       iconSize: lerpDouble(iconSize, other.iconSize, t) ?? iconSize,
       borderWidth: lerpDouble(borderWidth, other.borderWidth, t) ?? borderWidth,
-      borderRadius: lerpDouble(borderRadius, other.borderRadius, t) ?? borderRadius,
+      borderRadius:
+          lerpDouble(borderRadius, other.borderRadius, t) ?? borderRadius,
     );
   }
 }

@@ -18,7 +18,8 @@ class AuthForm extends StatefulWidget {
     required String password,
     String? username,
     File? profileImage,
-  }) onSubmit;
+  })
+  onSubmit;
   final bool isLoading;
 
   @override
@@ -38,7 +39,7 @@ class _AuthFormState extends State<AuthForm> {
     if (!isValid) {
       return;
     }
-    
+
     if (!widget.isLoginMode && _selectedImage == null) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -72,9 +73,7 @@ class _AuthFormState extends State<AuthForm> {
               },
             ),
           TextFormField(
-            decoration: const InputDecoration(
-              labelText: 'Email address',
-            ),
+            decoration: const InputDecoration(labelText: 'Email address'),
             keyboardType: TextInputType.emailAddress,
             autocorrect: false,
             textCapitalization: TextCapitalization.none,
@@ -85,9 +84,7 @@ class _AuthFormState extends State<AuthForm> {
           ),
           if (!widget.isLoginMode)
             TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Username',
-              ),
+              decoration: const InputDecoration(labelText: 'Username'),
               enableSuggestions: false,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -117,8 +114,7 @@ class _AuthFormState extends State<AuthForm> {
             },
           ),
           SizedBox(height: AppSpacing.mediumSpacing),
-          if (widget.isLoading)
-            const CircularProgressIndicator(),
+          if (widget.isLoading) const CircularProgressIndicator(),
           if (!widget.isLoading)
             ElevatedButton(
               style: ElevatedButton.styleFrom(

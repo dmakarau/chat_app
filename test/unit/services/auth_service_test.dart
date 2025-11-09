@@ -25,12 +25,14 @@ void main() {
         // Arrange
         const email = 'test@example.com';
         const password = 'password123';
-        
-        when(mockFirebaseAuth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        )).thenAnswer((_) async => mockUserCredential);
-        
+
+        when(
+          mockFirebaseAuth.signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          ),
+        ).thenAnswer((_) async => mockUserCredential);
+
         when(mockUserCredential.user).thenReturn(mockUser);
         when(mockUser.email).thenReturn(email);
 
@@ -42,24 +44,30 @@ void main() {
 
         // Assert
         expect(result.user?.email, equals(email));
-        verify(mockFirebaseAuth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        )).called(1);
+        verify(
+          mockFirebaseAuth.signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          ),
+        ).called(1);
       });
 
       test('should handle sign in failure with wrong password', () async {
         // Arrange
         const email = 'test@example.com';
         const password = 'wrongpassword';
-        
-        when(mockFirebaseAuth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        )).thenThrow(FirebaseAuthException(
-          code: 'wrong-password',
-          message: 'The password is invalid',
-        ));
+
+        when(
+          mockFirebaseAuth.signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          ),
+        ).thenThrow(
+          FirebaseAuthException(
+            code: 'wrong-password',
+            message: 'The password is invalid',
+          ),
+        );
 
         // Act & Assert
         expect(
@@ -75,14 +83,18 @@ void main() {
         // Arrange
         const email = 'nonexistent@example.com';
         const password = 'password123';
-        
-        when(mockFirebaseAuth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        )).thenThrow(FirebaseAuthException(
-          code: 'user-not-found',
-          message: 'No user record found',
-        ));
+
+        when(
+          mockFirebaseAuth.signInWithEmailAndPassword(
+            email: email,
+            password: password,
+          ),
+        ).thenThrow(
+          FirebaseAuthException(
+            code: 'user-not-found',
+            message: 'No user record found',
+          ),
+        );
 
         // Act & Assert
         expect(
@@ -98,12 +110,14 @@ void main() {
         // Arrange
         const email = 'newuser@example.com';
         const password = 'password123';
-        
-        when(mockFirebaseAuth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        )).thenAnswer((_) async => mockUserCredential);
-        
+
+        when(
+          mockFirebaseAuth.createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          ),
+        ).thenAnswer((_) async => mockUserCredential);
+
         when(mockUserCredential.user).thenReturn(mockUser);
         when(mockUser.email).thenReturn(email);
 
@@ -115,57 +129,73 @@ void main() {
 
         // Assert
         expect(result.user?.email, equals(email));
-        verify(mockFirebaseAuth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        )).called(1);
-      });
-
-      test('should handle account creation failure with existing email', () async {
-        // Arrange
-        const email = 'existing@example.com';
-        const password = 'password123';
-        
-        when(mockFirebaseAuth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        )).thenThrow(FirebaseAuthException(
-          code: 'email-already-in-use',
-          message: 'The email address is already in use',
-        ));
-
-        // Act & Assert
-        expect(
-          () => mockFirebaseAuth.createUserWithEmailAndPassword(
+        verify(
+          mockFirebaseAuth.createUserWithEmailAndPassword(
             email: email,
             password: password,
           ),
-          throwsA(isA<FirebaseAuthException>()),
-        );
+        ).called(1);
       });
 
-      test('should handle account creation failure with weak password', () async {
-        // Arrange
-        const email = 'test@example.com';
-        const password = '123';
-        
-        when(mockFirebaseAuth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        )).thenThrow(FirebaseAuthException(
-          code: 'weak-password',
-          message: 'The password is too weak',
-        ));
+      test(
+        'should handle account creation failure with existing email',
+        () async {
+          // Arrange
+          const email = 'existing@example.com';
+          const password = 'password123';
 
-        // Act & Assert
-        expect(
-          () => mockFirebaseAuth.createUserWithEmailAndPassword(
-            email: email,
-            password: password,
-          ),
-          throwsA(isA<FirebaseAuthException>()),
-        );
-      });
+          when(
+            mockFirebaseAuth.createUserWithEmailAndPassword(
+              email: email,
+              password: password,
+            ),
+          ).thenThrow(
+            FirebaseAuthException(
+              code: 'email-already-in-use',
+              message: 'The email address is already in use',
+            ),
+          );
+
+          // Act & Assert
+          expect(
+            () => mockFirebaseAuth.createUserWithEmailAndPassword(
+              email: email,
+              password: password,
+            ),
+            throwsA(isA<FirebaseAuthException>()),
+          );
+        },
+      );
+
+      test(
+        'should handle account creation failure with weak password',
+        () async {
+          // Arrange
+          const email = 'test@example.com';
+          const password = '123';
+
+          when(
+            mockFirebaseAuth.createUserWithEmailAndPassword(
+              email: email,
+              password: password,
+            ),
+          ).thenThrow(
+            FirebaseAuthException(
+              code: 'weak-password',
+              message: 'The password is too weak',
+            ),
+          );
+
+          // Act & Assert
+          expect(
+            () => mockFirebaseAuth.createUserWithEmailAndPassword(
+              email: email,
+              password: password,
+            ),
+            throwsA(isA<FirebaseAuthException>()),
+          );
+        },
+      );
 
       test('should handle sign out successfully', () async {
         // Arrange
@@ -220,13 +250,17 @@ void main() {
     group('Error Handling Tests', () {
       test('should handle network errors gracefully', () async {
         // Arrange
-        when(mockFirebaseAuth.signInWithEmailAndPassword(
-          email: anyNamed('email'),
-          password: anyNamed('password'),
-        )).thenThrow(FirebaseAuthException(
-          code: 'network-request-failed',
-          message: 'A network error occurred',
-        ));
+        when(
+          mockFirebaseAuth.signInWithEmailAndPassword(
+            email: anyNamed('email'),
+            password: anyNamed('password'),
+          ),
+        ).thenThrow(
+          FirebaseAuthException(
+            code: 'network-request-failed',
+            message: 'A network error occurred',
+          ),
+        );
 
         // Act & Assert
         expect(
@@ -240,13 +274,17 @@ void main() {
 
       test('should handle invalid email format', () async {
         // Arrange
-        when(mockFirebaseAuth.signInWithEmailAndPassword(
-          email: 'invalid-email',
-          password: 'password123',
-        )).thenThrow(FirebaseAuthException(
-          code: 'invalid-email',
-          message: 'The email address is badly formatted',
-        ));
+        when(
+          mockFirebaseAuth.signInWithEmailAndPassword(
+            email: 'invalid-email',
+            password: 'password123',
+          ),
+        ).thenThrow(
+          FirebaseAuthException(
+            code: 'invalid-email',
+            message: 'The email address is badly formatted',
+          ),
+        );
 
         // Act & Assert
         expect(

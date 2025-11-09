@@ -5,13 +5,8 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chat Screen'),
-      ),
-      body: Center(
-        child: Text('Loading...'),
-      ),
-
+      appBar: AppBar(title: const Text('Chat Screen')),
+      body: Center(child: Text('Loading...')),
     );
   }
 }

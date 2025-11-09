@@ -9,11 +9,11 @@ class ChatMessagesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authenticatedUser = AuthService.currentUser;
-    
+
     if (authenticatedUser == null) {
       return const Center(child: Text('User not authenticated'));
     }
-    
+
     return StreamBuilder(
       stream: ChatService.getChatMessages(),
       builder: (ct, snapshot) {
@@ -33,14 +33,12 @@ class ChatMessagesList extends StatelessWidget {
         final loadedMessages = snapshot.data!.docs;
 
         return ListView.builder(
-          padding: const EdgeInsets.only(
-            bottom: 16, 
-            top: 16,
-          ),
+          padding: const EdgeInsets.only(bottom: 16, top: 16),
           reverse: true,
           itemCount: loadedMessages.length,
           itemBuilder: (ctx, index) {
-            final chatMessage = loadedMessages[index].data() as Map<String, dynamic>;
+            final chatMessage =
+                loadedMessages[index].data() as Map<String, dynamic>;
             final nextChatMessage = index + 1 < loadedMessages.length
                 ? loadedMessages[index + 1].data() as Map<String, dynamic>
                 : null;
@@ -50,7 +48,7 @@ class ChatMessagesList extends StatelessWidget {
                 ? nextChatMessage['userId']
                 : null;
             final isSameUser = currenMessageUserId == nextMessageUserId;
-            
+
             return Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: isSameUser

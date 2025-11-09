@@ -25,10 +25,7 @@ class App extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 33, 150, 243),
           brightness: Brightness.light,
         ),
-        appBarTheme: const AppBarTheme(
-          centerTitle: false,
-          elevation: 0,
-        ),
+        appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
         cardTheme: const CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
@@ -36,9 +33,7 @@ class App extends StatelessWidget {
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           filled: true,
         ),
       ),
@@ -48,10 +43,7 @@ class App extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 33, 150, 243),
           brightness: Brightness.dark,
         ),
-        appBarTheme: const AppBarTheme(
-          centerTitle: false,
-          elevation: 0,
-        ),
+        appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
         cardTheme: const CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
@@ -59,22 +51,23 @@ class App extends StatelessWidget {
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           filled: true,
         ),
       ),
       themeMode: ThemeMode.system,
-      home: StreamBuilder(stream: AuthService.authStateChanges, builder: (ct, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SplashScreen();
-        }
-        if (snapshot.hasData) {
-          return const ChatScreen();
-        }
-        return const AuthScreen();
-      }),
+      home: StreamBuilder(
+        stream: AuthService.authStateChanges,
+        builder: (ct, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SplashScreen();
+          }
+          if (snapshot.hasData) {
+            return const ChatScreen();
+          }
+          return const AuthScreen();
+        },
+      ),
     );
   }
 }

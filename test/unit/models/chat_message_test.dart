@@ -73,86 +73,91 @@ void main() {
         mockTimestamp = MockTimestamp();
       });
 
-      test('should create ChatMessage from Firestore document with all fields', () {
-        // Arrange
-        const id = 'msg123';
-        const text = 'Hello world';
-        const userId = 'user123';
-        const username = 'testuser';
-        const userImage = 'https://example.com/avatar.jpg';
-        final createdAt = DateTime(2024, 1, 1);
+      test(
+        'should create ChatMessage from Firestore document with all fields',
+        () {
+          // Arrange
+          const id = 'msg123';
+          const text = 'Hello world';
+          const userId = 'user123';
+          const username = 'testuser';
+          const userImage = 'https://example.com/avatar.jpg';
+          final createdAt = DateTime(2024, 1, 1);
 
-        final data = {
-          'text': text,
-          'userId': userId,
-          'username': username,
-          'userImage': userImage,
-          'createdAt': mockTimestamp,
-        };
+          final data = {
+            'text': text,
+            'userId': userId,
+            'username': username,
+            'userImage': userImage,
+            'createdAt': mockTimestamp,
+          };
 
-        when(mockDocumentSnapshot.id).thenReturn(id);
-        when(mockDocumentSnapshot.data()).thenReturn(data);
-        when(mockTimestamp.toDate()).thenReturn(createdAt);
+          when(mockDocumentSnapshot.id).thenReturn(id);
+          when(mockDocumentSnapshot.data()).thenReturn(data);
+          when(mockTimestamp.toDate()).thenReturn(createdAt);
 
-        // Act
-        final chatMessage = ChatMessage.fromFirestore(mockDocumentSnapshot);
+          // Act
+          final chatMessage = ChatMessage.fromFirestore(mockDocumentSnapshot);
 
-        // Assert
-        expect(chatMessage.id, equals(id));
-        expect(chatMessage.text, equals(text));
-        expect(chatMessage.userId, equals(userId));
-        expect(chatMessage.username, equals(username));
-        expect(chatMessage.userImage, equals(userImage));
-        expect(chatMessage.createdAt, equals(createdAt));
-      });
+          // Assert
+          expect(chatMessage.id, equals(id));
+          expect(chatMessage.text, equals(text));
+          expect(chatMessage.userId, equals(userId));
+          expect(chatMessage.username, equals(username));
+          expect(chatMessage.userImage, equals(userImage));
+          expect(chatMessage.createdAt, equals(createdAt));
+        },
+      );
 
-      test('should create ChatMessage from Firestore document with missing optional fields', () {
-        // Arrange
-        const id = 'msg123';
-        const text = 'Hello world';
-        const userId = 'user123';
-        const username = 'testuser';
+      test(
+        'should create ChatMessage from Firestore document with missing optional fields',
+        () {
+          // Arrange
+          const id = 'msg123';
+          const text = 'Hello world';
+          const userId = 'user123';
+          const username = 'testuser';
 
-        final data = {
-          'text': text,
-          'userId': userId,
-          'username': username,
-        };
+          final data = {'text': text, 'userId': userId, 'username': username};
 
-        when(mockDocumentSnapshot.id).thenReturn(id);
-        when(mockDocumentSnapshot.data()).thenReturn(data);
+          when(mockDocumentSnapshot.id).thenReturn(id);
+          when(mockDocumentSnapshot.data()).thenReturn(data);
 
-        // Act
-        final chatMessage = ChatMessage.fromFirestore(mockDocumentSnapshot);
+          // Act
+          final chatMessage = ChatMessage.fromFirestore(mockDocumentSnapshot);
 
-        // Assert
-        expect(chatMessage.id, equals(id));
-        expect(chatMessage.text, equals(text));
-        expect(chatMessage.userId, equals(userId));
-        expect(chatMessage.username, equals(username));
-        expect(chatMessage.userImage, isNull);
-        expect(chatMessage.createdAt, isNull);
-      });
+          // Assert
+          expect(chatMessage.id, equals(id));
+          expect(chatMessage.text, equals(text));
+          expect(chatMessage.userId, equals(userId));
+          expect(chatMessage.username, equals(username));
+          expect(chatMessage.userImage, isNull);
+          expect(chatMessage.createdAt, isNull);
+        },
+      );
 
-      test('should create ChatMessage with default values for missing required fields', () {
-        // Arrange
-        const id = 'msg123';
-        final data = <String, dynamic>{};
+      test(
+        'should create ChatMessage with default values for missing required fields',
+        () {
+          // Arrange
+          const id = 'msg123';
+          final data = <String, dynamic>{};
 
-        when(mockDocumentSnapshot.id).thenReturn(id);
-        when(mockDocumentSnapshot.data()).thenReturn(data);
+          when(mockDocumentSnapshot.id).thenReturn(id);
+          when(mockDocumentSnapshot.data()).thenReturn(data);
 
-        // Act
-        final chatMessage = ChatMessage.fromFirestore(mockDocumentSnapshot);
+          // Act
+          final chatMessage = ChatMessage.fromFirestore(mockDocumentSnapshot);
 
-        // Assert
-        expect(chatMessage.id, equals(id));
-        expect(chatMessage.text, equals(''));
-        expect(chatMessage.userId, equals(''));
-        expect(chatMessage.username, equals(''));
-        expect(chatMessage.userImage, isNull);
-        expect(chatMessage.createdAt, isNull);
-      });
+          // Assert
+          expect(chatMessage.id, equals(id));
+          expect(chatMessage.text, equals(''));
+          expect(chatMessage.userId, equals(''));
+          expect(chatMessage.username, equals(''));
+          expect(chatMessage.userImage, isNull);
+          expect(chatMessage.createdAt, isNull);
+        },
+      );
 
       test('should handle null timestamp properly', () {
         // Arrange
@@ -205,25 +210,31 @@ void main() {
         expect(firestoreData['createdAt'], isA<Timestamp>());
       });
 
-      test('should convert ChatMessage to Firestore data with null optional fields', () {
-        // Arrange
-        const chatMessage = ChatMessage(
-          id: 'msg123',
-          text: 'Hello world',
-          userId: 'user123',
-          username: 'testuser',
-        );
+      test(
+        'should convert ChatMessage to Firestore data with null optional fields',
+        () {
+          // Arrange
+          const chatMessage = ChatMessage(
+            id: 'msg123',
+            text: 'Hello world',
+            userId: 'user123',
+            username: 'testuser',
+          );
 
-        // Act
-        final firestoreData = chatMessage.toFirestore();
+          // Act
+          final firestoreData = chatMessage.toFirestore();
 
-        // Assert
-        expect(firestoreData['text'], equals('Hello world'));
-        expect(firestoreData['userId'], equals('user123'));
-        expect(firestoreData['username'], equals('testuser'));
-        expect(firestoreData['userImage'], isNull);
-        expect(firestoreData['createdAt'], equals(FieldValue.serverTimestamp()));
-      });
+          // Assert
+          expect(firestoreData['text'], equals('Hello world'));
+          expect(firestoreData['userId'], equals('user123'));
+          expect(firestoreData['username'], equals('testuser'));
+          expect(firestoreData['userImage'], isNull);
+          expect(
+            firestoreData['createdAt'],
+            equals(FieldValue.serverTimestamp()),
+          );
+        },
+      );
 
       test('should not include id in Firestore data', () {
         // Arrange
@@ -254,7 +265,10 @@ void main() {
         final firestoreData = chatMessage.toFirestore();
 
         // Assert
-        expect(firestoreData['createdAt'], equals(FieldValue.serverTimestamp()));
+        expect(
+          firestoreData['createdAt'],
+          equals(FieldValue.serverTimestamp()),
+        );
       });
 
       test('should convert createdAt to Timestamp when present', () {
@@ -314,7 +328,8 @@ void main() {
 
       test('should handle special characters in text', () {
         // Arrange
-        const specialText = '🚀 Hello! @user #hashtag \$special chars & symbols';
+        const specialText =
+            '🚀 Hello! @user #hashtag \$special chars & symbols';
 
         // Act
         const chatMessage = ChatMessage(

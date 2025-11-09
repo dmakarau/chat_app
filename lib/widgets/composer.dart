@@ -17,31 +17,28 @@ class _ChatComposerState extends State<ChatComposer> {
     super.dispose();
   }
 
-  void _submitMessage() async  {
+  void _submitMessage() async {
     final enteredMessage = _controller.text;
     if (enteredMessage.trim().isEmpty) {
       return;
     }
-    
+
     FocusScope.of(context).unfocus();
     _controller.clear();
-    
+
     try {
       final user = AuthService.currentUser;
       if (user == null) {
         throw Exception('User not authenticated');
       }
 
-      await ChatService.sendMessage(
-        message: enteredMessage,
-        userId: user.uid,
-      );
+      await ChatService.sendMessage(message: enteredMessage, userId: user.uid);
     } catch (e) {
       // Handle error - could show a snackbar or dialog
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to send message: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to send message: $e')));
       }
     }
   }
@@ -50,15 +47,12 @@ class _ChatComposerState extends State<ChatComposer> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    
+
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         border: Border(
-          top: BorderSide(
-            color: theme.colorScheme.outlineVariant,
-            width: 0.5,
-          ),
+          top: BorderSide(color: theme.colorScheme.outlineVariant, width: 0.5),
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -68,7 +62,7 @@ class _ChatComposerState extends State<ChatComposer> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: isDark 
+                  color: isDark
                       ? theme.colorScheme.surfaceContainerHighest
                       : Colors.grey[100],
                   borderRadius: BorderRadius.circular(24),

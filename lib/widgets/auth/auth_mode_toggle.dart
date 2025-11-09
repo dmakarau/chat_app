@@ -21,9 +21,7 @@ class AuthModeToggle extends StatelessWidget {
     return TextButton(
       onPressed: onToggle,
       child: Text(
-        isLoginMode
-            ? 'Create new account'
-            : 'I already have an account',
+        isLoginMode ? 'Create new account' : 'I already have an account',
       ),
     );
   }

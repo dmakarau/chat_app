@@ -33,10 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
       });
 
       if (_isLoginMode) {
-        await AuthService.signIn(
-          email: email,
-          password: password,
-        );
+        await AuthService.signIn(email: email, password: password);
       } else {
         await UserService.registerUser(
           email: email,
@@ -64,9 +61,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _showErrorMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   void _toggleAuthMode() {

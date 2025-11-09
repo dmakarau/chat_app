@@ -12,7 +12,7 @@ class ChatService {
     try {
       // Get user profile for message metadata
       final userData = await UserService.getUserProfile(userId: userId);
-      
+
       if (userData == null) {
         throw Exception('User profile not found');
       }
@@ -44,8 +44,11 @@ class ChatService {
     required String currentUserId,
   }) async {
     try {
-      final messageDoc = await _firestore.collection('chat').doc(messageId).get();
-      
+      final messageDoc = await _firestore
+          .collection('chat')
+          .doc(messageId)
+          .get();
+
       if (!messageDoc.exists) {
         throw Exception('Message not found');
       }

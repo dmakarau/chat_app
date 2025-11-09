@@ -110,9 +110,7 @@ class UserService {
   }
 
   /// Delete user profile (cleanup)
-  static Future<void> deleteUserProfile({
-    required String userId,
-  }) async {
+  static Future<void> deleteUserProfile({required String userId}) async {
     try {
       // Delete profile image
       await StorageService.deleteUserImage(userId: userId);

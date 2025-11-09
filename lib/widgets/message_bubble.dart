@@ -16,9 +16,9 @@ class MessageBubble extends StatelessWidget {
     super.key,
     required this.message,
     required this.isMe,
-  })  : isFirstInSequence = false,
-        userImage = null,
-        username = null;
+  }) : isFirstInSequence = false,
+       userImage = null,
+       username = null;
 
   // Whether or not this message bubble is the first in a sequence of messages
   // from the same user.
@@ -47,7 +47,9 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
       child: Row(
-        mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isMe
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isMe && isFirstInSequence && userImage != null) ...[
@@ -62,7 +64,9 @@ class MessageBubble extends StatelessWidget {
           ],
           Flexible(
             child: Column(
-              crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              crossAxisAlignment: isMe
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
               children: [
                 if (isFirstInSequence && username != null && !isMe)
                   Padding(
@@ -79,12 +83,16 @@ class MessageBubble extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isMe
                         ? theme.colorScheme.primary
-                        : isDark 
-                            ? theme.colorScheme.surfaceContainerHighest
-                            : Colors.grey[100],
+                        : isDark
+                        ? theme.colorScheme.surfaceContainerHighest
+                        : Colors.grey[100],
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(isMe ? 18 : (isFirstInSequence ? 4 : 18)),
-                      topRight: Radius.circular(isMe ? (isFirstInSequence ? 4 : 18) : 18),
+                      topLeft: Radius.circular(
+                        isMe ? 18 : (isFirstInSequence ? 4 : 18),
+                      ),
+                      topRight: Radius.circular(
+                        isMe ? (isFirstInSequence ? 4 : 18) : 18,
+                      ),
                       bottomLeft: const Radius.circular(18),
                       bottomRight: const Radius.circular(18),
                     ),

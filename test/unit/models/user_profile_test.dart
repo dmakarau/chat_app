@@ -85,45 +85,48 @@ void main() {
         expect(userProfile.updatedAt, equals(updatedAt));
       });
 
-      test('should create UserProfile from Firestore data with missing optional fields', () {
-        // Arrange
-        const id = 'user123';
-        const username = 'testuser';
-        const email = 'test@example.com';
+      test(
+        'should create UserProfile from Firestore data with missing optional fields',
+        () {
+          // Arrange
+          const id = 'user123';
+          const username = 'testuser';
+          const email = 'test@example.com';
 
-        final data = {
-          'username': username,
-          'email': email,
-        };
+          final data = {'username': username, 'email': email};
 
-        // Act
-        final userProfile = UserProfile.fromFirestore(data, id);
+          // Act
+          final userProfile = UserProfile.fromFirestore(data, id);
 
-        // Assert
-        expect(userProfile.id, equals(id));
-        expect(userProfile.username, equals(username));
-        expect(userProfile.email, equals(email));
-        expect(userProfile.imageUrl, isNull);
-        expect(userProfile.createdAt, isNull);
-        expect(userProfile.updatedAt, isNull);
-      });
+          // Assert
+          expect(userProfile.id, equals(id));
+          expect(userProfile.username, equals(username));
+          expect(userProfile.email, equals(email));
+          expect(userProfile.imageUrl, isNull);
+          expect(userProfile.createdAt, isNull);
+          expect(userProfile.updatedAt, isNull);
+        },
+      );
 
-      test('should create UserProfile with default values for missing required fields', () {
-        // Arrange
-        const id = 'user123';
-        final data = <String, dynamic>{};
+      test(
+        'should create UserProfile with default values for missing required fields',
+        () {
+          // Arrange
+          const id = 'user123';
+          final data = <String, dynamic>{};
 
-        // Act
-        final userProfile = UserProfile.fromFirestore(data, id);
+          // Act
+          final userProfile = UserProfile.fromFirestore(data, id);
 
-        // Assert
-        expect(userProfile.id, equals(id));
-        expect(userProfile.username, equals(''));
-        expect(userProfile.email, equals(''));
-        expect(userProfile.imageUrl, isNull);
-        expect(userProfile.createdAt, isNull);
-        expect(userProfile.updatedAt, isNull);
-      });
+          // Assert
+          expect(userProfile.id, equals(id));
+          expect(userProfile.username, equals(''));
+          expect(userProfile.email, equals(''));
+          expect(userProfile.imageUrl, isNull);
+          expect(userProfile.createdAt, isNull);
+          expect(userProfile.updatedAt, isNull);
+        },
+      );
     });
 
     group('toFirestore Tests', () {
@@ -156,24 +159,27 @@ void main() {
         expect(firestoreData['updated_at'], equals(updatedAt));
       });
 
-      test('should convert UserProfile to Firestore data with null optional fields', () {
-        // Arrange
-        const userProfile = UserProfile(
-          id: 'user123',
-          username: 'testuser',
-          email: 'test@example.com',
-        );
+      test(
+        'should convert UserProfile to Firestore data with null optional fields',
+        () {
+          // Arrange
+          const userProfile = UserProfile(
+            id: 'user123',
+            username: 'testuser',
+            email: 'test@example.com',
+          );
 
-        // Act
-        final firestoreData = userProfile.toFirestore();
+          // Act
+          final firestoreData = userProfile.toFirestore();
 
-        // Assert
-        expect(firestoreData['username'], equals('testuser'));
-        expect(firestoreData['email'], equals('test@example.com'));
-        expect(firestoreData['image_url'], isNull);
-        expect(firestoreData['created_at'], isNull);
-        expect(firestoreData['updated_at'], isNull);
-      });
+          // Assert
+          expect(firestoreData['username'], equals('testuser'));
+          expect(firestoreData['email'], equals('test@example.com'));
+          expect(firestoreData['image_url'], isNull);
+          expect(firestoreData['created_at'], isNull);
+          expect(firestoreData['updated_at'], isNull);
+        },
+      );
 
       test('should not include id in Firestore data', () {
         // Arrange
@@ -201,7 +207,9 @@ void main() {
         );
 
         // Act
-        final updatedProfile = originalProfile.copyWith(username: 'newusername');
+        final updatedProfile = originalProfile.copyWith(
+          username: 'newusername',
+        );
 
         // Assert
         expect(updatedProfile.id, equals(originalProfile.id));
@@ -221,7 +229,9 @@ void main() {
         );
 
         // Act
-        final updatedProfile = originalProfile.copyWith(email: 'new@example.com');
+        final updatedProfile = originalProfile.copyWith(
+          email: 'new@example.com',
+        );
 
         // Assert
         expect(updatedProfile.id, equals(originalProfile.id));
@@ -243,7 +253,10 @@ void main() {
         );
 
         // Assert
-        expect(updatedProfile.imageUrl, equals('https://example.com/new-image.jpg'));
+        expect(
+          updatedProfile.imageUrl,
+          equals('https://example.com/new-image.jpg'),
+        );
         expect(updatedProfile.id, equals(originalProfile.id));
         expect(updatedProfile.username, equals(originalProfile.username));
         expect(updatedProfile.email, equals(originalProfile.email));
@@ -262,7 +275,9 @@ void main() {
         final newUpdatedAt = DateTime(2024, 1, 3);
 
         // Act
-        final updatedProfile = originalProfile.copyWith(updatedAt: newUpdatedAt);
+        final updatedProfile = originalProfile.copyWith(
+          updatedAt: newUpdatedAt,
+        );
 
         // Assert
         expect(updatedProfile.updatedAt, equals(newUpdatedAt));
@@ -311,11 +326,7 @@ void main() {
     group('Edge Cases', () {
       test('should handle empty strings', () {
         // Arrange & Act
-        const userProfile = UserProfile(
-          id: '',
-          username: '',
-          email: '',
-        );
+        const userProfile = UserProfile(id: '', username: '', email: '');
 
         // Assert
         expect(userProfile.id, equals(''));
