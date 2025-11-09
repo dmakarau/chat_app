@@ -34,6 +34,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: const ValueKey('user_image_picker'),
       children: [
         CircleAvatar(
           radius: 40,
