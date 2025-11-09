@@ -9,6 +9,10 @@
 .buildlog/
 .history
 .svn/
+
+# Analysis and documentation files (local only)
+REFACTORING_ANALYSIS.md
+*_ANALYSIS.md
 .swiftpm/
 migrate_working_dir/
 
