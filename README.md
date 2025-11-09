@@ -8,12 +8,17 @@ A Flutter chat application with Firebase authentication and real-time capabiliti
 ![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![Firebase Auth](https://img.shields.io/badge/Firebase_Auth-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Firebase Storage](https://img.shields.io/badge/Firebase_Storage-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Cloud Firestore](https://img.shields.io/badge/Cloud_Firestore-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![Material Design](https://img.shields.io/badge/Material_Design-757575?style=for-the-badge&logo=material-design&logoColor=white)
 
 ## Current Features
 
 - **Firebase Integration**: Complete Firebase setup with secure configuration management
 - **User Authentication**: Full login, signup, and logout functionality with Firebase Auth
+- **User Profile System**: Complete user registration with profile pictures and usernames
+- **Image Upload**: Profile picture upload and storage using Firebase Storage
+- **Cloud Database**: User profile data storage in Cloud Firestore
 - **Authentication Flow Management**: Automatic navigation based on user authentication state
 - **Screen Management**: Multi-screen architecture with splash, authentication, and chat screens
 - **Session Management**: Secure user logout with automatic return to authentication screen
@@ -28,9 +33,14 @@ A Flutter chat application with Firebase authentication and real-time capabiliti
 ### Completed
 - Firebase project setup and initialization
 - Complete user authentication system (login, registration, and logout)
+- User profile system with username validation and storage
+- Profile picture upload and management with Firebase Storage
+- User data storage in Cloud Firestore database
+- Image picker integration for profile photos
 - Authentication flow management with automatic screen navigation
 - Multi-screen architecture with proper state management
 - Authentication screen with login/signup mode toggle
+- Username field with validation for new user registration
 - Splash screen for loading states
 - Chat screen foundation with logout functionality
 - User session management with secure logout
@@ -55,6 +65,8 @@ lib/
 │   ├── auth_screen.dart     # Authentication screen with login/signup
 │   ├── chat_screen.dart     # Main chat interface
 │   └── splash_screen.dart   # Loading screen for app initialization
+├── widgets/
+│   └── user_image_picker.dart # Profile picture selection component
 └── utils/
     ├── validators.dart      # Form validation utilities
     ├── constants.dart       # App-wide constants
@@ -93,6 +105,9 @@ lib/
 
 - **firebase_core**: ^4.2.0 - Firebase SDK initialization
 - **firebase_auth**: ^6.1.1 - User authentication services
+- **firebase_storage**: ^13.0.4 - File storage for profile pictures
+- **cloud_firestore**: ^6.1.0 - NoSQL database for user profiles
+- **image_picker**: ^1.2.0 - Image selection from gallery/camera
 - **flutter**: SDK - Flutter framework
 
 ## Getting Started
@@ -100,7 +115,7 @@ lib/
 ### Prerequisites
 - Flutter SDK (latest stable version)
 - iOS Simulator or Android Emulator
-- Firebase project with Authentication enabled
+- Firebase project with Authentication, Storage, and Firestore enabled
 
 ### Installation
 
@@ -139,6 +154,8 @@ flutter run
    1. Go to [Firebase Console](https://console.firebase.google.com/)
    2. Create a new project or use existing one
    3. Enable Authentication with Email/Password provider
+   4. Enable Cloud Firestore database
+   5. Enable Firebase Storage
 
    #### B. Add Android App
    1. Click "Add app" → "Android" 
@@ -264,7 +281,8 @@ This project requires iOS 15.0 or later due to Firebase dependencies. The follow
 
 ### Authentication Flow
 - Complete authentication interface with seamless mode switching between login and signup
-- Firebase user authentication supporting both existing and new users
+- Firebase user authentication supporting both existing and new users  
+- User profile creation with username validation and profile picture upload
 - Comprehensive form validation with real-time error feedback
 - Professional error handling with descriptive Firebase exception messages
 - Secure session management through Firebase Auth
@@ -273,6 +291,13 @@ This project requires iOS 15.0 or later due to Firebase dependencies. The follow
 - Automatic return to authentication screen after logout
 - Splash screen during app initialization and authentication state checking
 
+### User Profile System
+- Complete user registration with profile pictures stored in Firebase Storage
+- Username validation with minimum length requirements
+- User profile data stored in Cloud Firestore for scalable access
+- Image picker integration allowing users to select profile photos from gallery
+- Automatic image optimization and storage management
+
 ### Application Architecture
 - Stream-based authentication state management using Firebase Auth
 - Clean separation between authentication, loading, and main application screens
@@ -280,12 +305,14 @@ This project requires iOS 15.0 or later due to Firebase dependencies. The follow
 - Persistent user sessions with proper state restoration
 
 ### Technical Implementation
-- Firebase SDK integration across all supported platforms
+- Firebase SDK integration across all supported platforms including Storage and Firestore
 - Secure configuration management excluding sensitive data from version control
 - Professional Flutter development patterns with proper state management
 - Cross-platform compatibility with iOS 15.0+ requirement for Firebase features
 - Robust exception handling for common authentication scenarios
-- Clean code architecture ready for chat functionality implementation
+- Clean widget architecture with reusable image picker component
+- Efficient file upload and storage management with Firebase Storage
+- NoSQL database integration with Cloud Firestore for user profiles
 
 ## Planned Features
 
