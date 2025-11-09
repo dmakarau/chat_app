@@ -249,7 +249,6 @@ void main() {
     testWidgets('should submit valid form data in signup mode', (tester) async {
       // Arrange
       bool submitCalled = false;
-      late Map<String, dynamic> submittedData;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -264,12 +263,6 @@ void main() {
                     profileImage,
                   }) {
                     submitCalled = true;
-                    submittedData = {
-                      'email': email,
-                      'password': password,
-                      'username': username,
-                      'profileImage': profileImage,
-                    };
                   },
               isLoading: false,
             ),
@@ -287,11 +280,11 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
       await tester.enterText(find.byType(TextFormField).at(2), 'password123');
       await tester.pump(const Duration(milliseconds: 100));
-      
+
       // Note: This test focuses on form validation and data submission
       // The profile image requirement is tested separately
       // For now, we'll test the form submission flow without image
-      
+
       // Try to submit (will fail due to missing image, but won't crash)
       await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
@@ -300,7 +293,8 @@ void main() {
       // This is the expected behavior for signup mode
       expect(submitCalled, isFalse); // Should be false due to missing image
       expect(find.text('Please select a profile picture.'), findsOneWidget);
-    });    testWidgets('should not submit form with invalid data', (tester) async {
+    });
+    testWidgets('should not submit form with invalid data', (tester) async {
       // Arrange
       bool submitCalled = false;
 
