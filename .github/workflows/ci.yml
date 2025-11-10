@@ -59,7 +59,7 @@ jobs:
       run: flutter test --coverage
 
     - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         file: coverage/lcov.info
         flags: unittests
@@ -99,13 +99,13 @@ jobs:
         fi
 
     - name: Upload Documentation Artifact
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v3
       with:
         path: doc/api
 
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v2
+      uses: actions/deploy-pages@v4
       if: success()
 
   # Security and Dependency Checks
