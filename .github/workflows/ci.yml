@@ -70,7 +70,7 @@ jobs:
   documentation:
     name: Generate Documentation
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && false  # Disabled until Pages is configured
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
       pages: write
